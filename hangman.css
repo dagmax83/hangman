@@ -1,0 +1,57 @@
+html {
+  font: 400 16px/1.428 'Verdana';
+}
+
+main {
+  padding: 20px;
+}
+
+footer,
+header {
+  padding: 5px 20px;
+}
+
+footer {
+  border-top: 2px ridge #666;
+}
+
+header {
+  border-bottom: 2px ridge #666;
+}
+
+.word-spaces,
+.wrongLetters {
+  border: 1px ridge grey;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin: 10px 0;
+}
+
+.word-spaces td,
+.wrongLetters td {
+  border: 2px inset #BBB;
+  width: 3ch;
+  height: 1.5rem;
+  padding: 1px;
+  text-align: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: white;
+}
+
+.wrongLetters td {
+  color: red;
+}
+
+.form-control {
+  width: 10ch;
+  text-align: center;
+}
+
+ul {
+  font-size: 1rem;
+  list-style: none;
+  padding-left: 0;
+}

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="hangman.css">
+    <title>Horror Film Hanging</title>
+</head>
+<body>
+    <header>
+        <h2>
+          Horror Film Hanging!!
+          </h2>
+      </header>
+      <main>
+        <figure class="hangman">
+          <img src="https://i.imgur.com/gSxmkUf.gif" id="gallows" align="middle top">
+          <img src="https://i.imgur.com/Mb4owx9.gif" id="head" align="middle top" style="display:none;">
+          <img src="https://i.imgur.com/xkXISte.gif" id="body" align="middle top" style="display:none;">
+          <img src="https://i.imgur.com/U44ReUi.gif" id="armL" align="middle top" style="display:none;">
+          <img src="https://i.imgur.com/49kkaQF.gif" id="handL" align="middle top" style="display:none;">
+          <img src="https://i.imgur.com/tqtNazW.gif" id="armR" align="middle top" style="display:none;">
+          <img src="https://i.imgur.com/ydnz7eX.gif" id="handR" align="middle top" style="display:none;">
+          <img src="https://i.imgur.com/dlL7Kek.gif" id="legL" align="middle top" style="display:none;">
+          <img src="https://i.imgur.com/3AQYFV9.gif" id="footL" align="middle top" style="display:none;">
+          <img src="https://i.imgur.com/j9noEN7.gif" id="legR" align="middle top" style="display:none;">
+          <img src="https://i.imgur.com/kJofX7M.gif" id="footR" align="middle top" style="display:none;">
+        </figure>
+      
+        <table class="word-spaces">
+          <caption>Your Word is: </caption>
+          <tbody>
+            <tr></tr>
+          </tbody>
+        </table>
+        <br/>
+        <fieldset class="guessIn">
+          <legend>
+            Guess a Letter
+          </legend>
+          <label for="form">Type a Letter then Click <kbd>Enter</kbd></label>
+          <input type="text" id="form" class="form-control" placeholder="guess">
+        
+        </fieldset>
+      
+        <table class="wrongLetters">
+          <caption>Letters Guessed Wrong:</caption>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </main>
+      <footer>
+        <a href="http://stackoverflow.com/questions/35387864/hangman-gameplay-in-javascript">Hangman Gameplay in JavaScript</a>
+      </footer>
+      
+    
+<script type="text/javascript">
+    
+var wordBank = ["freddy", "jason", "ghostface", "dracula", "warewolf", "frankinstein", "blob", "it", "michael", "chucky", "leatherface"];
+var word = [];
+var wrongGuesses = [];
+var rightGuesses = [];
+var images = [gallows, head, body, armL, handL, armR, handR, legL, footL, legR, footR];
+var y = 0;
+var i = 1;
+
+$(document).ready(function() {
+  function randomWord() {
+    var random = Math.floor(Math.random() * wordBank.length);
+    var toString = wordBank[random];
+    console.log(toString);
+    word = toString.split("");
+    console.log(word);
+  }
+  randomWord();
+
+  function wordSpaces() {
+    for (var i = 0; i < word.length; i++) {
+      $(".word-spaces > tbody > tr").append('<td data-idx=i>' + word[i] + '</td>')
+    }
+  }
+  wordSpaces();
+
+  function play(space) {
+    //indexOf()==inArray() 
+    var lIndex = jQuery.inArray(space, word);
+    if (lIndex == -1) {
+      wrongGuesses.push(space);
+      var wrong = wrongGuesses.length;
+      console.log('wrong ' + wrong)
+      $('.wrongLetters tbody tr td:nth-of-type(' + wrong + ')').text(space);
+
+      $(this).css("background-color", "#ff4500").fadeIn(300).delay(800).fadeOut(300);
+      $(images[i - 1]).hide();
+      $(images[i]).show();
+      i++;
+    } else {
+      $(".word-spaces tbody tr td:nth-of-type(" + (lIndex + 1) + ")").css('color', 'black');
+      rightGuesses.push(space);
+
+    }
+  }
+
+  $(".form-control").keypress(function(event) {
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    if (keycode == 13) {
+      var space = $(this).val();
+      play(space);
+      $(this).val('');
+      endGame();
+      return false;
+    }
+  });
+
+
+  function endGame() {
+    if (wrongGuesses.length >= 10 || rightGuesses.length == word.length) {
+      $("body").css("background-color", "#ff4500");
+      $(".form-control").prop('disabled', true);
+    }
+  }
+
+});
+
+    </script>
+</body>
+</html>
